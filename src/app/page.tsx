@@ -8,6 +8,7 @@ export default function Home() {
   const [start, setStart] = useState("00:00:00");
   const [end, setEnd] = useState("00:00:10");
   const [loading, setLoading] = useState(false);
+  const [tiktok, setTiktok] = useState(false); // ✅ thêm state để chọn mode
 
   // Hàm chuyển đổi HH:mm:ss thành giây
   const timeToSeconds = (time: string): number => {
@@ -49,7 +50,12 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url, start: startSeconds, end: endSeconds }),
+        body: JSON.stringify({
+          url,
+          start: startSeconds,
+          end: endSeconds,
+          mode: tiktok ? "tiktok" : "full", // ✅ gửi mode
+        }),
       });
 
       if (!res.ok) {
@@ -75,7 +81,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">  
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
       <main className="flex-1 max-w-lg mx-auto w-full">
         <div className="bg-white border rounded-xl shadow-lg p-6">
           <h1 className="text-3xl font-bold mb-6 text-center flex items-center justify-center gap-2">
@@ -115,6 +121,17 @@ export default function Home() {
             </div>
           </div>
 
+          {/* ✅ Checkbox chọn TikTok mode */}
+          <label className="flex items-center gap-2 mb-4 cursor-pointer">
+            <input
+              type="checkbox"
+              className="w-4 h-4"
+              checked={tiktok}
+              onChange={(e) => setTiktok(e.target.checked)}
+            />
+            <span className="text-sm">Xuất video dạng TikTok (9:16)</span>
+          </label>
+
           <button
             onClick={handleCut}
             disabled={loading}
@@ -144,8 +161,7 @@ export default function Home() {
             )}
             {loading ? "Processing..." : "Cut & Download"}
           </button>
-         
-          <div className="text-center">
+
           <footer className="text-center text-sm text-gray-500 mt-6">
             Tool by{" "}
             <a
@@ -157,11 +173,8 @@ export default function Home() {
               chisthongg
             </a>
           </footer>
-          </div>
         </div>
       </main>
-
-      
     </div>
   );
 }

@@ -75,7 +75,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen p-8 bg-gray-50">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">  
       <main className="flex-1 max-w-lg mx-auto w-full">
         <div className="bg-white border rounded-xl shadow-lg p-6">
           <h1 className="text-3xl font-bold mb-6 text-center flex items-center justify-center gap-2">
@@ -144,12 +144,24 @@ export default function Home() {
             )}
             {loading ? "Processing..." : "Cut & Download"}
           </button>
+         
+          <div className="text-center">
+          <footer className="text-center text-sm text-gray-500 mt-6">
+            Tool by{" "}
+            <a
+              href="https://chisthongdev.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-blue-600 hover:underline"
+            >
+              chisthongg
+            </a>
+          </footer>
+          </div>
         </div>
       </main>
 
-      <footer className="text-center text-sm text-gray-500 mt-6">
-        Tool by <span className="font-semibold">chisthongg</span>
-      </footer>
+      
     </div>
   );
 }
